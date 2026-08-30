@@ -357,6 +357,16 @@
   .skill-check { flex: none; width: 15px; height: 15px; color: var(--accent-ink); }
   .skill-name { font-size: 14px; font-weight: 500; }
   .skill-name span { display: block; font-size: 12px; color: var(--ink-faint); font-weight: 400; margin-top: 1px; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--ink-muted);
+  }
 
   /* ---------- Projects ---------- */
   .project-grid { display: flex; flex-direction: column; gap: 14px; }
@@ -462,6 +472,7 @@
       <li><a href="#about">About</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#skills">Skills</a></li>
+      <li><a href="#automation">Automation</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -499,7 +510,7 @@
       </div>
       <div class="stat">
         <div class="stat-label">Automation</div>
-        <div class="stat-value">Playwright in progress</div>
+        <div class="stat-value">Selenium &middot; Playwright</div>
       </div>
     </div>
   </section>
@@ -556,7 +567,7 @@
         <div class="eyebrow">Skills</div>
         <h2 class="section-title">Coverage matrix</h2>
       </div>
-      <span class="badge badge--muted">9 TRACKED</span>
+      <span class="badge badge--muted">6 TRACKED</span>
     </div>
 
     <div class="skill-groups">
@@ -589,31 +600,53 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
 
+  <section class="section" id="automation">
+    <div class="section-head">
       <div>
-        <div class="skill-group-label">Working proficiency</div>
-        <div class="skill-list">
-          <div class="skill-row">
-            <svg class="skill-check" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span class="skill-name">Python<span>Scripting &amp; test logic</span></span>
-          </div>
-          <div class="skill-row">
-            <svg class="skill-check" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span class="skill-name">Selenium<span>Browser automation</span></span>
-          </div>
-        </div>
+        <div class="eyebrow">Automation</div>
+        <h2 class="section-title">Automation toolkit</h2>
       </div>
+      <span class="badge badge--progress">
+        <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3"/></svg>
+        IN PROGRESS
+      </span>
+    </div>
+    <p class="lede">
+      This is what I'm investing in outside my day job &mdash; applied to real test projects I build and
+      maintain myself, not tutorials.
+    </p>
 
-      <div>
-        <div class="skill-group-label">Actively building</div>
-        <div class="skill-list">
-          <div class="skill-row">
-            <svg class="skill-check" viewBox="0 0 16 16" fill="none" style="color: var(--warn);"><circle cx="8" cy="8" r="3"/></svg>
-            <span class="skill-name">Playwright<span>Flagship automation framework, in progress</span></span>
-          </div>
-        </div>
+    <div class="skill-list" style="margin-top: 20px;">
+      <div class="skill-row">
+        <svg class="skill-check" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="skill-name">Python<span>Scripting test logic and utilities</span></span>
+      </div>
+      <div class="skill-row">
+        <svg class="skill-check" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="skill-name">Selenium<span>Browser automation, working proficiency</span></span>
+      </div>
+      <div class="skill-row">
+        <svg class="skill-check" viewBox="0 0 16 16" fill="none" style="color: var(--warn);"><circle cx="8" cy="8" r="3"/></svg>
+        <span class="skill-name">Playwright<span>Flagship framework, in progress</span></span>
+      </div>
+      <div class="skill-row">
+        <svg class="skill-check" viewBox="0 0 16 16" fill="none" style="color: var(--warn);"><circle cx="8" cy="8" r="3"/></svg>
+        <span class="skill-name">Pytest<span>Structuring and running test suites</span></span>
       </div>
     </div>
+
+    <div class="skill-group-label" style="margin-top: 24px;">Practices</div>
+    <div class="tag-row">
+      <span class="tag">Page Object Model</span>
+      <span class="tag">Data-Driven Testing</span>
+    </div>
+
+    <p class="project-note" style="margin-top: 20px;">
+      Applied hands-on in the <strong>playwright-ui-suite</strong> project below.
+    </p>
   </section>
 
   <section class="section" id="projects">
