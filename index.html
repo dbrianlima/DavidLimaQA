@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>David Lima — QA Analyst</title>
+<meta name="description" content="QA portfolio for David Lima — QA Analyst at BMM Test Lab, building an automation practice with Python, Selenium, and Playwright.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    --bg: #F6F7F9;
+    --surface: #FFFFFF;
+    --surface-2: #EFF1F4;
+    --ink: #12161C;
+    --ink-muted: #5B6472;
+    --ink-faint: #8790A0;
+    --border: #E1E4E9;
+    --border-strong: #CBD0D8;
+    --accent: #0E8A67;
+    --accent-ink: #076B4F;
+    --accent-soft: #E4F5EE;
+    --warn: #A8690F;
+    --warn-soft: #FBEED9;
+    --shadow: 0 1px 2px rgba(18, 22, 28, 0.04), 0 8px 24px -12px rgba(18, 22, 28, 0.10);
+    --radius: 10px;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0D1117;
+      --surface: #161B22;
+      --surface-2: #1C222B;
+      --ink: #E7EAEE;
+      --ink-muted: #939DAD;
+      --ink-faint: #6B7484;
+      --border: #262C36;
+      --border-strong: #333B48;
+      --accent: #34D399;
+      --accent-ink: #6EE7B7;
+      --accent-soft: rgba(52, 211, 153, 0.12);
+      --warn: #E3A73B;
+      --warn-soft: rgba(227, 167, 59, 0.14);
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 28px -14px rgba(0, 0, 0, 0.55);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #0D1117;
+    --surface: #161B22;
+    --surface-2: #1C222B;
+    --ink: #E7EAEE;
+    --ink-muted: #939DAD;
+    --ink-faint: #6B7484;
+    --border: #262C36;
+    --border-strong: #333B48;
+    --accent: #34D399;
+    --accent-ink: #6EE7B7;
+    --accent-soft: rgba(52, 211, 153, 0.12);
+    --warn: #E3A73B;
+    --warn-soft: rgba(227, 167, 59, 0.14);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 28px -14px rgba(0, 0, 0, 0.55);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fade-up { animation: fadeUp 0.5s ease-out both; }
+    .fade-up:nth-child(2) { animation-delay: 0.06s; }
+    .fade-up:nth-child(3) { animation-delay: 0.12s; }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  a { color: inherit; }
+  h1, h2, h3 { text-wrap: balance; margin: 0; }
+
+  .shell {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 24px 96px;
+  }
+
+  /* ---------- Nav ---------- */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .mark-box {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    border: 1.5px solid var(--accent);
+    color: var(--accent-ink);
+    display: grid;
+    place-items: center;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .nav-links {
+    display: flex;
+    gap: 22px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink-muted);
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .nav-links a:hover,
+  .nav-links a:focus-visible { color: var(--ink); border-color: var(--accent); }
+  .nav-links li { display: none; }
+  @media (min-width: 640px) { .nav-links li { display: block; } }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 56px 0 44px; }
+  .run-meta {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 22px;
+  }
+  .run-meta .sep { color: var(--border-strong); }
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 3px 9px 3px 7px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+  }
+  .status-pill svg { width: 11px; height: 11px; flex: none; }
+
+  .hero h1 {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: clamp(34px, 6vw, 52px);
+    letter-spacing: -0.01em;
+    line-height: 1.08;
+  }
+  .hero .role {
+    margin-top: 10px;
+    font-size: clamp(17px, 2.4vw, 20px);
+    color: var(--accent-ink);
+    font-weight: 600;
+  }
+  .hero .pitch {
+    margin-top: 16px;
+    max-width: 56ch;
+    font-size: 16.5px;
+    color: var(--ink-muted);
+  }
+  .hero .locale {
+    margin-top: 14px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--ink-faint);
+  }
+
+  .stat-row {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .stat {
+    padding: 14px 16px;
+    border-right: 1px solid var(--border);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .stat-value {
+    margin-top: 4px;
+    font-size: 14.5px;
+    font-weight: 600;
+  }
+  @media (max-width: 560px) {
+    .stat-row { grid-template-columns: 1fr; }
+    .stat { border-right: none; border-bottom: 1px solid var(--border); }
+    .stat:last-child { border-bottom: none; }
+  }
+
+  /* ---------- Sections ---------- */
+  .section { padding: 40px 0; border-top: 1px solid var(--border); }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .section-title {
+    margin-top: 4px;
+    font-size: 22px;
+    font-weight: 600;
+    font-family: var(--sans);
+  }
+  .badge {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    padding: 4px 9px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .badge svg { width: 10px; height: 10px; }
+  .badge--pass { background: var(--accent-soft); color: var(--accent-ink); }
+  .badge--progress { background: var(--warn-soft); color: var(--warn); }
+  .badge--muted { background: var(--surface-2); color: var(--ink-muted); }
+
+  .lede { color: var(--ink-muted); max-width: 68ch; }
+
+  /* ---------- Experience ---------- */
+  .role-card {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    box-shadow: var(--shadow);
+  }
+  .role-card-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .role-title { font-size: 17px; font-weight: 600; }
+  .role-meta {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+  .role-card ul {
+    margin: 14px 0 0;
+    padding-left: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .role-card li {
+    position: relative;
+    padding-left: 20px;
+    font-size: 14.5px;
+    color: var(--ink-muted);
+  }
+  .role-card li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 6px;
+    height: 6px;
+    border-radius: 1px;
+    background: var(--accent);
+    opacity: 0.8;
+  }
+  .role-card li strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Skills ---------- */
+  .skill-groups { display: flex; flex-direction: column; gap: 22px; }
+  .skill-group-label {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 10px;
+  }
+  .skill-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  @media (max-width: 560px) { .skill-list { grid-template-columns: 1fr; } }
+  .skill-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .skill-check { flex: none; width: 15px; height: 15px; color: var(--accent-ink); }
+  .skill-name { font-size: 14px; font-weight: 500; }
+  .skill-name span { display: block; font-size: 12px; color: var(--ink-faint); font-weight: 400; margin-top: 1px; }
+
+  /* ---------- Projects ---------- */
+  .project-grid { display: flex; flex-direction: column; gap: 14px; }
+  .project-card {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .project-card:hover { border-color: var(--border-strong); transform: translateY(-1px); }
+  .project-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .project-name { font-size: 15.5px; font-weight: 600; font-family: var(--mono); }
+  .project-desc { margin-top: 8px; font-size: 14px; color: var(--ink-muted); max-width: 62ch; }
+  .project-note {
+    margin-top: 18px;
+    font-size: 13px;
+    color: var(--ink-faint);
+    border-left: 2px solid var(--border-strong);
+    padding-left: 12px;
+  }
+
+  /* ---------- Education ---------- */
+  .edu-list { display: flex; flex-direction: column; gap: 14px; }
+  .edu-row { display: flex; gap: 14px; align-items: flex-start; }
+  .edu-icon {
+    flex: none;
+    width: 30px; height: 30px;
+    border-radius: 7px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    display: grid; place-items: center;
+    color: var(--accent-ink);
+  }
+  .edu-icon svg { width: 15px; height: 15px; }
+  .edu-title { font-weight: 600; font-size: 14.5px; }
+  .edu-sub { font-size: 13.5px; color: var(--ink-muted); margin-top: 1px; }
+
+  /* ---------- Contact / footer ---------- */
+  .contact { padding-top: 40px; }
+  .contact-title {
+    font-family: var(--mono);
+    font-size: clamp(22px, 4vw, 30px);
+    font-weight: 600;
+  }
+  .contact-lede { margin-top: 10px; color: var(--ink-muted); max-width: 52ch; }
+  .contact-links {
+    margin-top: 26px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .contact-link svg { width: 15px; height: 15px; color: var(--ink-faint); }
+  .contact-link:hover, .contact-link:focus-visible { border-color: var(--accent); color: var(--accent-ink); }
+  .contact-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .contact-link.is-placeholder { opacity: 0.6; border-style: dashed; }
+  .contact-link.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .contact-link.primary:hover { border-color: var(--accent-ink); }
+  .contact-link.primary svg { color: #fff; }
+
+  .foot {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="mark"><span class="mark-box">DL</span> David Lima</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="shell" id="top">
+
+  <section class="hero">
+    <div class="run-meta fade-up">
+      <span>run &rarr; david-lima.qa-profile</span>
+      <span class="sep">&middot;</span>
+      <span class="status-pill">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        OPEN TO QA / AUTOMATION ROLES
+      </span>
+    </div>
+
+    <h1 class="fade-up">David Lima</h1>
+    <p class="role fade-up">QA Analyst &mdash; Automation-Focused</p>
+    <p class="pitch fade-up">
+      I test software the way regulators expect it to be tested &mdash; thorough, documented, defensible &mdash;
+      and I'm putting that same rigor into building an automation practice with Python, Selenium, and Playwright.
+    </p>
+    <p class="locale fade-up">Dieppe, New Brunswick, Canada &middot; open to remote</p>
+
+    <div class="stat-row fade-up">
+      <div class="stat">
+        <div class="stat-label">Current role</div>
+        <div class="stat-value">BMM Test Lab, since 2024</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Core testing</div>
+        <div class="stat-value">Manual &middot; API &middot; SQL</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Automation</div>
+        <div class="stat-value">Playwright in progress</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">About</div>
+        <h2 class="section-title">Manual-QA discipline, automation-ready momentum</h2>
+      </div>
+    </div>
+    <p class="lede">
+      I'm a QA Analyst at BMM Test Lab in Dieppe, NB, where I test gaming systems against strict regulatory
+      compliance requirements &mdash; the kind of testing where a missed edge case is a licensing problem, not
+      just a bug ticket. My day-to-day is manual, regression, and compliance testing, backed by SQL data
+      validation and API testing to confirm systems behave correctly beyond the UI.
+    </p>
+    <p class="lede" style="margin-top: 14px;">
+      I hold a B.Sc. in Systems Analysis and a Postgraduate Diploma in Quality Assurance Testing, and I'm
+      currently extending that manual foundation into automation &mdash; already comfortable with Python and
+      Selenium, and building Playwright as my flagship framework.
+    </p>
+  </section>
+
+  <section class="section" id="experience">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Experience</div>
+        <h2 class="section-title">Where I've put it into practice</h2>
+      </div>
+      <span class="badge badge--pass">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        VERIFIED
+      </span>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-head">
+        <div class="role-title">Intermediate QA Analyst &middot; BMM Test Lab</div>
+        <div class="role-meta">Dieppe, NB &middot; 2024 &ndash; Present</div>
+      </div>
+      <ul>
+        <li>Promoted from <strong>QA Tester</strong> to <strong>Intermediate QA Analyst</strong> for consistent, defensible testing on regulated gaming systems.</li>
+        <li>Run <strong>manual, regression, and compliance testing</strong> across releases, applying formal test-case design to catch what automated checks alone would miss.</li>
+        <li><strong>SQL data validation</strong> and <strong>API testing</strong> to verify system behavior beyond what's visible in the UI.</li>
+        <li>Authored onboarding and training documentation that became the <strong>company standard for new hires</strong> &mdash; cutting onboarding time by <strong>1 week</strong> and raising knowledge retention by <strong>60%</strong>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="skills">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Skills</div>
+        <h2 class="section-title">Coverage matrix</h2>
+      </div>
+      <span class="badge badge--muted">9 TRACKED</span>
+    </div>
+
+    <div class="skill-groups">
+      <div>
+        <div class="skill-group-label">Core strength &mdash; daily use at BMM</div>
+        <div class="skill-list">
+          <div class="skill-row">
+            <svg class="skill-check" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="skill-name">Regression &amp; Compliance Testing<span>Regulated gaming systems</span></span>
+          </div>
+          <div class="skill-row">
+            <svg class="skill-check" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="skill-name">Manual Test Case Design<span>Edge cases &amp; negative paths</span></span>
+          </div>
+          <div class="skill-row">
+            <svg class="skill-check" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="skill-name">SQL Data Validation<span>Verifying behavior at the data layer</span></span>
+          </div>
+          <div class="skill-row">
+            <svg class="skill-check" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="skill-name">API Testing<span>Beyond the UI layer</span></span>
+          </div>
+          <div class="skill-row">
+            <svg class="skill-check" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="skill-name">Bug Reporting &amp; Documentation<span>Standard adopted company-wide</span></span>
+          </div>
+          <div class="skill-row">
+            <svg class="skill-check" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="skill-name">Technical &amp; Onboarding Docs<span>Company-standard training material</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="skill-group-label">Working proficiency</div>
+        <div class="skill-list">
+          <div class="skill-row">
+            <svg class="skill-check" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="skill-name">Python<span>Scripting &amp; test logic</span></span>
+          </div>
+          <div class="skill-row">
+            <svg class="skill-check" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="skill-name">Selenium<span>Browser automation</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="skill-group-label">Actively building</div>
+        <div class="skill-list">
+          <div class="skill-row">
+            <svg class="skill-check" viewBox="0 0 16 16" fill="none" style="color: var(--warn);"><circle cx="8" cy="8" r="3"/></svg>
+            <span class="skill-name">Playwright<span>Flagship automation framework, in progress</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="projects">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Projects</div>
+        <h2 class="section-title">Automation portfolio &mdash; building in public</h2>
+      </div>
+      <span class="badge badge--progress">
+        <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3"/></svg>
+        3 IN PROGRESS
+      </span>
+    </div>
+    <p class="lede">
+      I'm early into automation, on purpose &mdash; building real suites rather than tutorials, at a pace that
+      fits around a full-time QA role. Here's what's active right now.
+    </p>
+
+    <div class="project-grid" style="margin-top: 20px;">
+      <div class="project-card">
+        <div class="project-card-head">
+          <div class="project-name">playwright-ui-suite</div>
+          <span class="badge badge--progress">
+            <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3"/></svg>
+            IN PROGRESS
+          </span>
+        </div>
+        <p class="project-desc">
+          My flagship automation project: a Playwright UI test suite built with a page-object structure,
+          applying the same regression-test thinking I use manually at BMM to a codebase I control end to end.
+        </p>
+      </div>
+
+      <div class="project-card">
+        <div class="project-card-head">
+          <div class="project-name">api-test-suite-python</div>
+          <span class="badge badge--muted">PLANNED</span>
+        </div>
+        <p class="project-desc">
+          Extending my API testing experience into a standalone Python suite &mdash; validating endpoints,
+          status codes, and payloads independent of any UI.
+        </p>
+      </div>
+
+      <div class="project-card">
+        <div class="project-card-head">
+          <div class="project-name">sql-validation-toolkit</div>
+          <span class="badge badge--muted">PLANNED</span>
+        </div>
+        <p class="project-desc">
+          A reusable set of SQL checks and a checklist format for the data-validation work I do for
+          compliance testing, cleaned up for public use.
+        </p>
+      </div>
+    </div>
+
+    <p class="project-note">
+      This section updates as each suite ships. Full code, READMEs, and CI runs will link from here directly.
+    </p>
+  </section>
+
+  <section class="section" id="education">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Education</div>
+        <h2 class="section-title">Credentials</h2>
+      </div>
+    </div>
+    <div class="edu-list">
+      <div class="edu-row">
+        <div class="edu-icon">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M1.5 6L8 3l6.5 3L8 9 1.5 6Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M4 7.5v3c0 .8 1.8 1.5 4 1.5s4-.7 4-1.5v-3" stroke="currentColor" stroke-width="1.3"/></svg>
+        </div>
+        <div>
+          <div class="edu-title">B.Sc., Systems Analysis</div>
+          <div class="edu-sub">Foundation for structured, systems-level thinking about software</div>
+        </div>
+      </div>
+      <div class="edu-row">
+        <div class="edu-icon">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M1.5 6L8 3l6.5 3L8 9 1.5 6Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M4 7.5v3c0 .8 1.8 1.5 4 1.5s4-.7 4-1.5v-3" stroke="currentColor" stroke-width="1.3"/></svg>
+        </div>
+        <div>
+          <div class="edu-title">Postgraduate Diploma, Quality Assurance Testing</div>
+          <div class="edu-sub">Formal QA methodology and testing practice</div>
+        </div>
+      </div>
+      <div class="edu-row">
+        <div class="edu-icon" style="color: var(--warn);">
+          <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3"/></svg>
+        </div>
+        <div>
+          <div class="edu-title">QA certification &mdash; in progress</div>
+          <div class="edu-sub">Currently preparing</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section contact" id="contact">
+    <div class="eyebrow">Contact</div>
+    <h2 class="contact-title">Let's talk testing.</h2>
+    <p class="contact-lede">
+      Looking for a QA Analyst who brings manual rigor and a growing automation toolkit? I'd like to hear
+      about the role.
+    </p>
+    <div class="contact-links">
+      <a class="contact-link primary" href="mailto:dbrianlima@gmail.com">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M2 4h12v8H2V4Z" stroke="currentColor" stroke-width="1.3"/><path d="M2.5 4.5 8 9l5.5-4.5" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+        dbrianlima@gmail.com
+      </a>
+      <a class="contact-link" href="https://www.linkedin.com/in/limadave" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 7v3.5M5.5 5.3v.1M8 10.5V8.2c0-.9.6-1.4 1.4-1.4.8 0 1.3.5 1.3 1.4v2.3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        linkedin.com/in/limadave
+      </a>
+      <a class="contact-link is-placeholder" href="#" aria-disabled="true" title="Add your GitHub URL here">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M8 1.5a6.5 6.5 0 0 0-2 12.7c.3.1.4-.2.4-.3v-1.2c-1.8.4-2.2-.8-2.2-.8-.3-.7-.7-1-.7-1-.6-.4 0-.4 0-.4.6 0 1 .6 1 .6.6 1 1.5.7 1.9.6.1-.4.2-.7.4-.9-1.5-.2-3-.7-3-3.3 0-.7.3-1.3.6-1.8-.1-.2-.3-.9.1-1.8 0 0 .5-.2 1.7.6a5.8 5.8 0 0 1 3 0c1.2-.8 1.7-.6 1.7-.6.4.9.2 1.6.1 1.8.4.5.6 1.1.6 1.8 0 2.6-1.5 3.1-3 3.3.2.2.4.6.4 1.2v1.8c0 .1.1.4.4.3A6.5 6.5 0 0 0 8 1.5Z" fill="currentColor"/></svg>
+        github.com/&mdash; add your username
+      </a>
+    </div>
+
+    <div class="foot">
+      <span>&copy; 2026 David Lima</span>
+      <span>Built for the QA automation job search</span>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>
